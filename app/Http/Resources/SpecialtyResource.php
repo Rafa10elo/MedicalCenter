@@ -11,10 +11,7 @@ class SpecialtyResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => [
-                'en' => $this->getTranslation('name','en'),
-                'ar' => $this->getTranslation('name','ar'),
-            ],
+            'name' => $this->name,
             'created_at' => $this->created_at,
         ];
     }
