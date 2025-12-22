@@ -10,7 +10,12 @@ use Illuminate\Notifications\Notifiable;
 class Admin extends Authenticatable
 {
     use HasApiTokens, Notifiable, HasRoles;
-    protected $guard_name = 'admin';
+    protected $guard_name = 'sanctum';
     protected $fillable = ['name','email','password'];
+    protected $hidden = ['password','remember_token'];
+    protected $casts = [
+        'password' => 'hashed',
+    ];
+
 }
 

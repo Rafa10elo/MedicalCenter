@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Specialty extends Model
 {
-    protected $fillable = ['name','description'];
+    use HasTranslations, SoftDeletes;
 
-    public function doctors()
-    {
-        return $this->belongsToMany(Doctor::class, 'doctor_specialty');
-    }
+    public $translatable = ['name'];
+
+    protected $fillable = ['name'];
 }

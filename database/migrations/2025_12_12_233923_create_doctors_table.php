@@ -18,8 +18,11 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('password');
             $table->text('bio')->nullable();
+            $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
+
 
     }
 

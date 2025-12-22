@@ -18,8 +18,11 @@ return new class extends Migration
             $table->string('password');
             $table->date('dob')->nullable();
             $table->string('phone')->nullable();
+            $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
+
 
     }
 

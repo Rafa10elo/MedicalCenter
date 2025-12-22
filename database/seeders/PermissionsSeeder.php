@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -24,35 +23,38 @@ class PermissionsSeeder extends Seeder
         foreach ($permissions as $permission) {
             Permission::firstOrCreate([
                 'name' => $permission,
-                'guard_name' => 'admin'
-            ]);
-            Permission::firstOrCreate([
-                'name' => $permission,
-                'guard_name' => 'doctor'
-            ]);
-            Permission::firstOrCreate([
-                'name' => $permission,
-                'guard_name' => 'patient'
+                'guard_name' => 'sanctum',
             ]);
         }
 
-        $superAdmin = Role::firstOrCreate([
+        $adminRole = Role::firstOrCreate([
             'name' => 'Admin',
-            'guard_name' => 'admin'
+            'guard_name' => 'sanctum',
         ]);
 
         $doctorRole = Role::firstOrCreate([
             'name' => 'Doctor',
-            'guard_name' => 'doctor'
+            'guard_name' => 'sanctum',
         ]);
 
         $patientRole = Role::firstOrCreate([
             'name' => 'Patient',
-            'guard_name' => 'patient'
+            'guard_name' => 'sanctum',
         ]);
 
-    $superAdmin->givePermissionTo(Permission::where('guard_name','admin')->get());
-      $doctorRole->givePermissionTo(['view-appointments']);
-     $patientRole->givePermissionTo(['book-appointment','view-appointments']);
+        $adminRole->syncPermissions([
+            'manage-specialties',
+            'manage-doctors',
+            'view-appointments',
+        ]);
+
+        $doctorRole->syncPermissions([
+            'view-appointments',
+        ]);
+
+        $patientRole->syncPermissions([
+            'book-appointment',
+            'view-appointments',
+        ]);
     }
 }
