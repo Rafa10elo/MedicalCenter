@@ -21,10 +21,9 @@ class SpecialtyController extends Controller
     {
 
 
-        $lang = $request->header('lang', 'en');
 
         return SpecialtyResource::collection(
-            $this->service->list($lang)
+            $this->service->list()
         );
     }
 

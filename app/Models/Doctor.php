@@ -11,7 +11,8 @@ use Illuminate\Notifications\Notifiable;
 class Doctor extends Authenticatable
 {
     use HasApiTokens, Notifiable, HasRoles, SoftDeletes;
-    protected $guard_name = 'sanctum';
+    protected $guard = 'doctor';
+    protected $guard_name = 'doctor';
     protected $fillable = ['name','email','password','phone','bio'];
     protected $hidden = ['password','remember_token'];
     protected $casts = [

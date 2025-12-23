@@ -10,8 +10,10 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class SpecialtyService
 {
-    public function list(string $lang = 'en')
+    public function list()
     {
+
+        $lang = app()->getLocale();
         return Specialty::latest()
             ->get()
             ->map(function ($specialty) use ($lang) {

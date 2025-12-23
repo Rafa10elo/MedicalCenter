@@ -17,22 +17,22 @@ class AppointmentService
         Gate::authorize('book-appointment');
 
         return DB::transaction(function () use ($data) {
-
             $scheduledAt = Carbon::parse($data['scheduled_at']);
 
             $conflict = Appointment::where('doctor_id', $data['doctor_id'])
                 ->where('scheduled_at', $scheduledAt)
                 ->exists();
 
-            if ($conflict) {
-                throw new Exception('Doctor already has an appointment at this time.');
-            }
+
+            if ($conflict)
+                throw new Exception('doctor already has an appointment at this time');
+
 
             $appointment = Appointment::create([
                 'doctor_id' => $data['doctor_id'],
                 'patient_id' => $data['patient_id'],
                 'scheduled_at' => $scheduledAt,
-                'status' => AppointmentStatus::Pending->value,
+                'status' => 'pending',
                 'notes' => $data['notes'] ?? null,
             ]);
 
