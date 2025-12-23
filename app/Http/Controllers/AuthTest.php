@@ -18,34 +18,30 @@ class AuthTest extends Controller
         $guards = ['admin', 'doctor', 'patient'];
 
         foreach ($guards as $guard) {
+            $user = Auth::guard($guard)->getProvider()->retrieveByCredentials(['email' => $request->email]);
 
-            $user = Auth::guard($guard)
-                ->getProvider()
-                ->retrieveByCredentials(['email' => $request->email]);
-
-            if (!$user) {
+            if (!$user)
                 continue;
-            }
 
-            if (! Hash::check($request->password, $user->password)) {
+         if (!Hash::check($request->password, $user->password))
                 continue;
-            }
 
-            Auth::guard($guard)->login($user);
+
+          Auth::guard($guard)->login($user);
 
             $user->tokens()->delete();
             $token = $user->createToken($guard.'_token',[$guard])->plainTextToken;
 
             return response()->json([
-                'message' => 'successful',
-                'role' => $guard,
+              'message' => 'successful',
+               'role' => $guard,
                 'token' => $token,
                 'user' => $user,
             ]);
         }
 
         return response()->json([
-            'message' => 'invalid credentials'
+          'message' => 'invalid credentials'
         ], 401);
     }
 }
