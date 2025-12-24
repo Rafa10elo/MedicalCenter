@@ -4,15 +4,10 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\SpecialtyController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminAuth;
-use App\Http\Controllers\DoctorAuth;
-use App\Http\Controllers\PatientAuth;
+
 use App\Http\Controllers\AuthTest;
 
 
-Route::post('patient/login', [PatientAuth::class, 'login']);
-Route::post('doctor/login', [DoctorAuth::class, 'login']);
-Route::post('admin/login', [AdminAuth::class, 'login']);
 
 Route::post('/login', [AuthTest::class, 'login']);
 
